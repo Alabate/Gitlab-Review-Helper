@@ -1,4 +1,11 @@
 ///////////////////////////////
+// Check if we are on the right page
+///////////////////////////////
+if (document.body.dataset.page != 'projects:merge_requests:show') {
+    return;
+}
+
+///////////////////////////////
 // Consts
 ///////////////////////////////
 // Duration in ms between the time we check if the loading is over

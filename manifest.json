@@ -1,5 +1,4 @@
 {
-
   "description": "Gitlab review helper",
   "manifest_version": 2,
   "name": "GitlabReviewHelper",
@@ -8,7 +7,7 @@
   "content_scripts": [
     {
       "run_at": "document_end",
-      "matches": ["https://git.vitibot.fr/*/merge_requests/*"],
+      "matches": ["*/merge_requests/*"],
       "js": ["main.js"]
     }
   ],
@@ -18,5 +17,4 @@
       "id": "a@labate.me"
     }
   }
-
 }
