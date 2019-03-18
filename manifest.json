@@ -1,0 +1,22 @@
+{
+
+  "description": "Gitlab review helper",
+  "manifest_version": 2,
+  "name": "GitlabReviewHelper",
+  "version": "1.0",
+  "homepage_url": "https://git.vitibot.fr/alabate/review-webextension",
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["https://git.vitibot.fr/*/merge_requests/*"],
+      "js": ["main.js"]
+    }
+  ],
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "a@labate.me"
+    }
+  }
+
+}
