@@ -11,5 +11,10 @@
       "js": ["main.js"]
     }
   ],
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{da22c2ac-b625-4316-af03-c3d0f4851812}"
+    }
+  }
 }
