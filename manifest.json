@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "GitlabReviewHelper",
   "version": "1.0",
-  "homepage_url": "https://git.vitibot.fr/alabate/review-webextension",
+  "homepage_url": "https://github.com/Alabate/Gitlab-Review-Helper",
   "content_scripts": [
     {
       "run_at": "document_end",
@@ -14,7 +14,7 @@
   "permissions": ["storage"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "a@labate.me"
+      "id": "ga@labate.me"
     }
   }
 }

@@ -1,21 +1,28 @@
-# Review Webextension
+# Gitlab review helper
+
+This extension will help you to review merge requests with a lot of files on any gitlab instance by allowing you to mark a file has reviewed and remember it for the next time you open it.
 
 ## Features
 
-Wanted:
+* Add a :+1: button on each file during review which close them and save into your browser that you reviewed this version of this file, on this merge request
+  * This should be synced between your multiple computers/phones if you have connected them to a sync account (Not tested)
+  * A file review is stored by merge request. If you have the same version of the file on another MR, it will not mark it as reviewed
+  * If a new commit on the branch edit the file, the bar will become orange to indicate that it has been modificated since your last review.
+  * File modification check is based on the full file, not only the diff.
+* Should work with any browser that use webextension, but only tested on Firefox Desktop
+* When you re-open the MR, it will reload every state, put in green and close file you reviewed and in orange modified files
 
-* Add a :+1: button on each file during review which close them and save into your browser that you reviewed this file at this commit
-* File reviewed are store by review
-* Store theses validation into browser local storage
-* Clean the reviewed files when the MR is closed
-* When you open a merge request, there is a button that will close file that doesn't have change since your last review
-* Find a way to export the storage of reviewed file or sync them somewhere to use it. Maybe into a gitlab repository ?
+TODO:
 
-Done:
+* Check if a file has been modified based on the diff, because if the diff hasn't been modified, that mean nothing near the code has been modified, just stuff merged from another branch
+* Delete stored hash on closed MR
+* Add a count of files left to review
 
-* Nothing
+## Security notes
 
-## Installing an example
+This extension will have to download all the source code of files modified by the merge request that you are looking at. It also inject javascript into any page that contains `/merge_requests/` in its URI. Obviously it only use it for the purpose of the extension and doesn't upload anything anywhere. But you may want to take a look at the source code (it pretty short) to be sure that this repository hasn't been hacked to add maliscious stuff in the extension (generally a good practice if you can). 
+
+## Installing it temporarly
 
 There are a couple ways to try out the example extensions in this repository.
 
