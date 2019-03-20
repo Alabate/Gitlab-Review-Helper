@@ -1,8 +1,10 @@
+"use strict";
+
 ///////////////////////////////
 // Check if we are on the right page
 ///////////////////////////////
 if (document.body.dataset.page != 'projects:merge_requests:show') {
-    return;
+    throw new 'This is not a gitlab merge requests page, i\'m done here!';
 }
 
 ///////////////////////////////
@@ -166,8 +168,8 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         }
         
         // Set titlebar color
-        let icon = null;
-        let className = null;
+        let icon = '';
+        let className = '';
         if (!value) {
             // not validated
             className = 'reviewed-set';
@@ -198,8 +200,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         if (actionBar.length <= 0) {
             throw 'Couldn\'t find title actionBar bar';
         }
-        actionBar[0].innerHTML = actionBar[0].innerHTML
-            + '<button title="Mark as reviewed" type="button" class="btn ' + className + '">' + icon + '</button>';
+        actionBar[0].innerHTML += '<button title="Mark as reviewed" type="button" class="btn ' + className + '">' + icon + '</button>';
 
         // Set listener for click
         let setBtn = fileHolder.querySelectorAll('.reviewed-set');

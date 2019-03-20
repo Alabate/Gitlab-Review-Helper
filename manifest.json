@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "run_at": "document_end",
-      "matches": ["*/merge_requests/*"],
+      "matches": ["*://*/*/merge_requests/*"],
       "js": ["main.js"]
     }
   ],

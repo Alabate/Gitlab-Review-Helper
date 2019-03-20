@@ -1,0 +1,17 @@
+image: node:10.15-stretch
+
+stages:
+  - build
+
+before_script:
+  - npm install -g web-ext
+
+build:
+  stage: build
+  script:
+    - web-ext lint
+    - web-ext build -a output
+  artifacts:
+    expire_in: 30d
+    paths:
+      - output/
