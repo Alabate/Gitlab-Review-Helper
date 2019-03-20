@@ -200,7 +200,12 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         if (actionBar.length <= 0) {
             throw 'Couldn\'t find title actionBar bar';
         }
-        actionBar[0].innerHTML += '<button title="Mark as reviewed" type="button" class="btn ' + className + '">' + icon + '</button>';
+        let el = document.createElement('button');
+        el.setAttribute('title', 'Mark as reviewed');
+        el.setAttribute('type', 'button');
+        el.classList.add('btn', className);
+        el.appendChild(document.createTextNode(icon));
+        actionBar[0].appendChild(el);
 
         // Set listener for click
         let setBtn = fileHolder.querySelectorAll('.reviewed-set');

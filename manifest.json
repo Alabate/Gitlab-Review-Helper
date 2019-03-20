@@ -11,10 +11,5 @@
       "js": ["main.js"]
     }
   ],
-  "permissions": ["storage"],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "ga@labate.me"
-    }
-  }
+  "permissions": ["storage"]
 }
