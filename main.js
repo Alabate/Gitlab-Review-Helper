@@ -54,11 +54,11 @@ const FILE_HOLDER_CLOSED_SELECTOR = '.diff-collapsed';
 let waitForLoaded = () => {
     return new Promise((resolve, reject) => {
         if (document.querySelectorAll(END_LOADING_SELECTOR).length == 0) {
-            console.log('Still loading..')
+            console.info('Still loading..')
             setTimeout(() => waitForLoaded().then(resolve).catch(reject), LOADING_RETRY_PERIOD);
         }
         else {
-            console.log('Loading is over!');
+            console.info('Loading is over!');
             setTimeout(() => resolve(), AFTER_LOADING_DURATION);
         }
     })
@@ -127,7 +127,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         filePath = titleEl[0].dataset.originalTitle;
     }
     else {
-        throw 'Couldn\'t find file title';
+        throw filePath + ': Couldn\'t find file title';
     }
     key = mergeRequestURI + ':' + filePath;
 
@@ -137,7 +137,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         viewFileUrl = viewFielEl[0].getAttribute('href');
     }
     else {
-        throw 'Couldn\'t find view file link';
+        throw filePath + ': Couldn\'t find view file link';
     }
     viewFileUrlRaw = viewFileUrl.replace('\/blob\/', '/raw/');
 
@@ -164,7 +164,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
     .then(value => {
         let titleBar = fileHolder.querySelectorAll(FILE_HOLDER_TITLEBAR_SELECTOR);
         if (titleBar.length <= 0) {
-            throw 'Couldn\'t find title bar';
+            throw filePath + ': Couldn\'t find title bar';
         }
 
         // Set titlebar color
@@ -174,20 +174,20 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
             // not validated
             className = 'reviewed-set';
             icon = '👍';
-            console.log(filePath, 'Not validated', value);
+            console.debug(filePath, 'Not validated', value);
         }
         else if(value != hash) {
             // Validated but modified
             icon = '👍';
             className = 'reviewed-set';
-            console.log(filePath, 'Modified', value);
+            console.debug(filePath, 'Modified', value);
             titleBar[0].style.backgroundColor = COLOR_MODIFIED;
         }
         else {
             // Still valid
             icon = '👎';
             className = 'reviewed-unset';
-            console.log(filePath, 'Validated', value);
+            console.debug(filePath, 'Validated', value);
             titleBar[0].style.backgroundColor = COLOR_VALIDATED;
             // Click only if open
             if (isExpanded(fileHolder)) {
@@ -250,17 +250,17 @@ waitForLoaded().then(() => {
     let promise = promises.reduce((previous, promise) => {
         return previous
             .catch(error => {
-                console.log('Error', error)
+                console.error(error)
             })
             .finally(promise);
     }, Promise.resolve())
 
 
     // Start it
-    promise.then(() => {
-        console.log('Done')
-    })
+    promise
     .catch(error => {
-        console.log('Error', error)
+        console.error(error)
+    }).finally(() => {
+        console.info('Done')
     })
 })
