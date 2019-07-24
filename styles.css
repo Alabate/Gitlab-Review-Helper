@@ -1,0 +1,14 @@
+.ReviewWebextension__Progress {
+    vertical-align: middle;
+    display: inline-block;
+    padding: 6px 10px;
+    background-color: #fafafa;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    margin-top: 8px;
+    height: 36px;
+    overflow: hidden;
+    white-space: nowrap;
+}

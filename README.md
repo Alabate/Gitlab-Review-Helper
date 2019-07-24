@@ -10,16 +10,16 @@ This extension will help you to review merge requests with a lot of files on any
 * If a new commit on the branch edit the file, the bar will become orange to indicate that it has been modificated since your last review.
 * File modification check is based on the full file, not only the diff.
 * When you open the MR page again, it will reload every state, put in green files you reviewed and in orange modified files
+* Add a count of files left to review
 
 TODO:
 
 * Check if a file has been modified based on the diff, because if the diff hasn't been modified, that mean nothing near the code has been modified, just stuff merged from another branch
 * Delete stored hash on closed MR
-* Add a count of files left to review
 
 ## Security notes
 
-This extension will have to download all the source code of files modified by the merge request that you are looking at. It also inject javascript into any page that contains `/merge_requests/` in its URI. Obviously it only use it for the purpose of the extension and doesn't upload anything anywhere. But you may want to take a look at the source code (it pretty short) to be sure that this repository hasn't been hacked to add maliscious stuff in the extension (generally a good practice if you can). 
+This extension will have to download all the source code of files modified by the merge request that you are looking at. It also inject javascript into any page that contains `/merge_requests/` in its URI. Obviously it only use it for the purpose of the extension and doesn't upload anything anywhere. But you may want to take a look at the source code (it pretty short) to be sure that this repository hasn't been hacked to add maliscious stuff in the extension (generally a good practice if you can).
 
 ## Compatibility
 This extension should work with any browser that is compatible with webextension, but it is only tested on Firefox Desktop.

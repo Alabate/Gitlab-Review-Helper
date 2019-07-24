@@ -43,6 +43,16 @@ const FILE_HOLDER_TITLE_SELECTOR = '.file-title .file-title-name';
 const FILE_HOLDER_LINE_CONTENT_SELECTOR = '.diff-content > .diff-viewer .line_content';
 // Selector to match 'open' diff icon
 const FILE_HOLDER_CLOSED_SELECTOR = '.diff-collapsed';
+// Progress container selector
+const FILE_PROGRESS_CONTAINER_SELECTOR = '.merge-request-tabs-container';
+
+///////////////////////////////
+// Globar var
+///////////////////////////////
+
+var fileCount = 0;
+var doneCount = 0;
+var progressEl = null;
 
 ///////////////////////////////
 // Functions
@@ -96,6 +106,10 @@ function onSetClick(fileHolder, titleBar, btn, key, hash) {
     if (isExpanded(fileHolder)) {
         titleBar.click();
     }
+    doneCount++;
+    if (progressEl) {
+        progressEl.innerHTML = doneCount + ' / ' + fileCount + ' viewed';
+    }
 }
 
 /**
@@ -106,6 +120,10 @@ function onUnsetClick(fileHolder, titleBar, btn, key, hash) {
     titleBar.style.backgroundColor = '';
     btn.innerHTML = '👍';
     btn.addEventListener('click', () => onSetClick(fileHolder, titleBar, btn, key, hash), {once: true});
+    doneCount--;
+    if (progressEl) {
+        progressEl.innerHTML = doneCount + ' / ' + fileCount + ' viewed';
+    }
 }
 
 /**
@@ -201,6 +219,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
             titleBar[0].style.backgroundColor = COLOR_MODIFIED;
         }
         else {
+            doneCount++;
             // Still valid
             icon = '👎';
             className = 'reviewed-unset';
@@ -223,6 +242,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         el.classList.add('btn', className);
         el.appendChild(document.createTextNode(icon));
         actionBar[0].appendChild(el);
+        fileCount++;
 
         // Set listener for click
         let setBtn = fileHolder.querySelectorAll('.reviewed-set');
@@ -272,12 +292,20 @@ waitForLoaded().then(() => {
             .finally(promise);
     }, Promise.resolve())
 
-
     // Start it
     promise
     .catch(error => {
         console.error(error)
     }).finally(() => {
-        console.info('Done')
+        // add a progress count at top
+        let progressContainer = document.querySelectorAll(FILE_PROGRESS_CONTAINER_SELECTOR);
+        if (progressContainer.length != 1) {
+            throw 'Couldn\'t find title progress counter container';
+        }
+        progressEl = document.createElement('div');
+        progressEl.classList.add('ReviewWebextension__Progress');
+        progressEl.innerHTML = doneCount + ' / ' + fileCount + ' viewed';
+        progressContainer[0].appendChild(progressEl);
     })
 })
+fileCount
