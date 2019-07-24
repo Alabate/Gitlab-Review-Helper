@@ -108,7 +108,8 @@ function onSetClick(fileHolder, titleBar, btn, key, hash) {
     }
     doneCount++;
     if (progressEl) {
-        progressEl.innerHTML = doneCount + ' / ' + fileCount + ' viewed';
+        progressEl.firstChild.remove()
+        progressEl.appendChild(document.createTextNode(doneCount + ' / ' + fileCount + ' viewed'));
     }
 }
 
@@ -122,7 +123,8 @@ function onUnsetClick(fileHolder, titleBar, btn, key, hash) {
     btn.addEventListener('click', () => onSetClick(fileHolder, titleBar, btn, key, hash), {once: true});
     doneCount--;
     if (progressEl) {
-        progressEl.innerHTML = doneCount + ' / ' + fileCount + ' viewed';
+        progressEl.firstChild.remove()
+        progressEl.appendChild(document.createTextNode(doneCount + ' / ' + fileCount + ' viewed'));
     }
 }
 
@@ -304,7 +306,7 @@ waitForLoaded().then(() => {
         }
         progressEl = document.createElement('div');
         progressEl.classList.add('ReviewWebextension__Progress');
-        progressEl.innerHTML = doneCount + ' / ' + fileCount + ' viewed';
+        progressEl.appendChild(document.createTextNode(doneCount + ' / ' + fileCount + ' viewed'));
         progressContainer[0].appendChild(progressEl);
     })
 })
