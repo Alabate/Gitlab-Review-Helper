@@ -34,7 +34,7 @@ const FILE_HOLDER_SELECTOR = '.diff-files-holder > .file-holder';
 // Right button bar of a file diff
 const FILE_HOLDER_TITLEBAR_SELECTOR = '.file-title';
 // Right button bar of a file diff
-const FILE_HOLDER_ACTIONS_SELECTOR = '.file-title > .file-actions';
+const FILE_HOLDER_ACTIONS_SELECTOR = '.file-title';
 // View file link of the file_diff
 const FILE_HOLDER_VIEW_FILE_SELECTOR = '.file-title > .file-actions .view-file';
 // Link to view the current file that contain the commit hash
@@ -119,6 +119,8 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
     let filePath = null;
     let viewFileUrl = null;
     let viewFileUrlRaw = null;
+    let fileContent = null;
+    let getTextPromise = null;
     let hash = null;
     let key = null;
     // Find filename
@@ -135,17 +137,32 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
     let viewFielEl = fileHolder.querySelectorAll(FILE_HOLDER_VIEW_FILE_SELECTOR);
     if (viewFielEl.length > 0) {
         viewFileUrl = viewFielEl[0].getAttribute('href');
+        viewFileUrlRaw = viewFileUrl.replace('\/blob\/', '/raw/');
+    }
+    else if(filePath.split('@').length == 2) {
+        // submodule modification have no file button and have title in the format "path@commit_hash"
+        fileContent = filePath.split('@')[1];
+        filePath = filePath.split('@')[0];
     }
     else {
         throw filePath + ': Couldn\'t find view file link';
     }
-    viewFileUrlRaw = viewFileUrl.replace('\/blob\/', '/raw/');
 
-    // Get file content
-    return fetch(window.location.protocol + '//' + window.location.hostname + viewFileUrlRaw)
-    .then(response => {
-        return response.text();
-    })
+    // Fetch content if there is a file or use already available content if possible
+    if (viewFileUrlRaw) {
+        getTextPromise = fetch(window.location.protocol + '//' + window.location.hostname + viewFileUrlRaw)
+        .then(response => {
+            return response.text();
+        });
+    }
+    else if (fileContent) {
+        getTextPromise = Promise.resolve(fileContent);
+    }
+    else {
+        throw filePath + ': No file content available';
+    }
+
+    return getTextPromise
     .then(text => {
         var enc = new TextEncoder();
         let arrayBuffer = enc.encode(text);
