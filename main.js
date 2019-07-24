@@ -248,7 +248,11 @@ waitForLoaded().then(() => {
         })
     }
     let promise = promises.reduce((previous, promise) => {
-        return previous.then(promise);
+        return previous
+            .catch(error => {
+                console.log('Error', error)
+            })
+            .finally(promise);
     }, Promise.resolve())
 
 
