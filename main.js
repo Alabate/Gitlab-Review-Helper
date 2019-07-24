@@ -259,5 +259,8 @@ waitForLoaded().then(() => {
     // Start it
     promise.then(() => {
         console.log('Done')
-    });
+    })
+    .catch(error => {
+        console.log('Error', error)
+    })
 })
