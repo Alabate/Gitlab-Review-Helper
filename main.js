@@ -36,7 +36,7 @@ const FILE_HOLDER_TITLEBAR_SELECTOR = '.file-title';
 // Right button bar of a file diff
 const FILE_HOLDER_ACTIONS_SELECTOR = '.file-title > .file-actions';
 // View file link of the file_diff
-const FILE_HOLDER_VIEW_FILE_SELECTOR = '.file-title > .file-actions > .view-file';
+const FILE_HOLDER_VIEW_FILE_SELECTOR = '.file-title > .file-actions .view-file';
 // Link to view the current file that contain the commit hash
 const FILE_HOLDER_TITLE_SELECTOR = '.file-title .file-title-name';
 // Selector of tags that contains diff text in the file_holder
@@ -140,7 +140,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         throw 'Couldn\'t find view file link';
     }
     viewFileUrlRaw = viewFileUrl.replace('\/blob\/', '/raw/');
-    
+
     // Get file content
     return fetch(window.location.protocol + '//' + window.location.hostname + viewFileUrlRaw)
     .then(response => {
@@ -166,7 +166,7 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
         if (titleBar.length <= 0) {
             throw 'Couldn\'t find title bar';
         }
-        
+
         // Set titlebar color
         let icon = '';
         let className = '';
