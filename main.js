@@ -91,7 +91,12 @@ function bufferToHex(buffer) {
  * @returns {bool} True if expanded
  */
 function isExpanded(fileHolder) {
-    return fileHolder.querySelectorAll(FILE_HOLDER_CLOSED_SELECTOR).length <= 0;
+    let close_selector = fileHolder.querySelectorAll(FILE_HOLDER_CLOSED_SELECTOR);
+    if (close_selector.length > 0 && close_selector[0]){
+        return close_selector[0].style.display  == 'none';
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -145,11 +150,11 @@ function prepareFileHolder(fileHolder, mergeRequestURI) {
     let key = null;
     // Find filename
     let titleEl = fileHolder.querySelectorAll(FILE_HOLDER_TITLE_SELECTOR);
-    if (titleEl.length > 0 && titleEl[0].dataset) {
-        filePath = titleEl[0].dataset.originalTitle;
+    if (titleEl.length > 0 && titleEl[0].title) {
+        filePath = titleEl[0].title;
     }
     else {
-        throw filePath + ': Couldn\'t find file title';
+        throw ': Couldn\'t find file title';
     }
     key = mergeRequestURI + ':' + filePath;
 
